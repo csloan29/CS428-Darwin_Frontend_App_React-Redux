@@ -25,14 +25,18 @@ class Sidebar extends Component {
     const sideList = (
       <div className={classes.list}>
         <List>
-          <ListItem button key={"Find Board"}>
-            <ListItemIcon><SearchIcon /></ListItemIcon>
-            <ListItemText primary={"Find Board"} />
-          </ListItem>
-          <ListItem button key={"View Last Board"}>
-            <ListItemIcon><ViewListIcon /></ListItemIcon>
-            <ListItemText primary={"View Last Board"} />
-          </ListItem>
+          <Link to='/boards' style={{textDecoration: 'none'}}>
+            <ListItem button key={"Find Board"}>
+              <ListItemIcon><SearchIcon /></ListItemIcon>
+              <ListItemText primary={"Find Board"} />
+            </ListItem>
+          </Link>
+          <Link to='/boards/TEST' style={{textDecoration: 'none'}}>
+            <ListItem button key={"View Last Board"}>
+              <ListItemIcon><ViewListIcon /></ListItemIcon>
+              <ListItemText primary={"View Last Board"} />
+            </ListItem>
+          </Link>
         </List>
       </div>
     );
