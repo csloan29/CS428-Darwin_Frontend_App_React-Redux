@@ -9,10 +9,6 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import promise from 'redux-promise';
 import reducers from './reducers';
 
-import LoginPage from './components/LoginPage';
-
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
@@ -26,12 +22,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <div>
-        <Route exact path="/login" component={LoginPage}/>
-        <Route exact path="/" component={App}/>
-      </div>
-    </Router>
+    <App />
   </Provider>,
   document.getElementById('root'));
 
