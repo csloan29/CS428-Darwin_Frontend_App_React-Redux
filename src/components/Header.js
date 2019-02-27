@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import './App.css';
 
-class App extends Component {
+class Header extends Component {
   render() {
     return (
       <div>
-        Test App
+        Test Header
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default Header;

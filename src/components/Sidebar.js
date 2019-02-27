@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import './App.css';
 
-class App extends Component {
+class Sidebar extends Component {
   render() {
     return (
       <div>
-        Test App
+        Test Sidebar
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default Sidebar;
