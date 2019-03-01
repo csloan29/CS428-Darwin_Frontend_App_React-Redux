@@ -60,7 +60,7 @@ class FindBoardPage extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.container}>
-        <CreateBoardModal />
+        <CreateBoardModal className={classes.createBoard}/>
         <p>
           OR
         </p>

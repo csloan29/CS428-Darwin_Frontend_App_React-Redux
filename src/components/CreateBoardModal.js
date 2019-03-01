@@ -4,6 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
+import { createBoard } from '../actions';
 
 function getModalStyle() {
   const top = 50;
@@ -21,10 +23,6 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 200,
-  },
-
-  createBoard: {
-    marginTop: '30px'
   },
   paper: {
     position: 'absolute',
@@ -53,7 +51,10 @@ class CreateBoardModal extends Component {
     this.setState({
       first: false
     })
-    
+    if(this.state.title) {
+      //do something
+      this.props.createBoard(this.state.title);
+    }
   }
 
   toggleModal() {
@@ -90,7 +91,7 @@ class CreateBoardModal extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div className={this.props.className}>
         <Button variant="contained" color="primary" className={`${classes.button} ${classes.createBoard}`} onClick={this.toggleModal}>
           Create Board
         </Button>
@@ -126,4 +127,12 @@ class CreateBoardModal extends Component {
   }
 }
 
-export default withStyles(styles)(CreateBoardModal);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createBoard: (title) => {
+      dispatch(createBoard(title));
+    }
+  }
+}
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(CreateBoardModal));
