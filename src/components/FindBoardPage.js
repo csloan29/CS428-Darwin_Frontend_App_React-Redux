@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import CreateBoardModal from './CreateBoardModal';
 
 const styles = theme => ({
   textField: {
@@ -13,7 +14,7 @@ const styles = theme => ({
     textAlign: 'center'
   },
   createBoard: {
-    marginTop: '20px'
+    marginTop: '30px'
   }
 });
 
@@ -25,12 +26,7 @@ class FindBoardPage extends Component {
       boardID: '',
       first: true
     }
-    this.createBoard = this.createBoard.bind(this);
     this.viewBoard = this.viewBoard.bind(this);
-  }
-
-  createBoard() {
-
   }
 
   viewBoard() {
@@ -64,9 +60,7 @@ class FindBoardPage extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.container}>
-        <Button variant="contained" color="primary" className={`${classes.button} ${classes.createBoard}`} onClick={this.createBoard}>
-          Create Board
-        </Button>
+        <CreateBoardModal />
         <p>
           OR
         </p>
