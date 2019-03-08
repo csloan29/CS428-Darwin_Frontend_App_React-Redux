@@ -10,6 +10,17 @@ const styles = theme => ({
     width: '50%',
     margin: 'auto',
     ...theme.spacing.page
+  },
+  descrContainer: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  descr: {
+    width: '80%',
+    display: 'inline-block'
+  },
+  likeButton: {
+
   }
 });
 
@@ -21,10 +32,12 @@ class IdeaPage extends Component {
         <Typography variant="h3" gutterBottom>
           Title of Idea
         </Typography>
-        <Typography color="textSecondary" gutterBottom>
-          Idea description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
-        </Typography>
-        <LikeButton />
+        <div className={classes.descrContainer}>
+          <Typography color="textSecondary" component="span" className={classes.descr} gutterBottom>
+            Idea description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
+          </Typography>
+          <LikeButton className={classes.likeButton}/>
+        </div>
         <Divider/>
         <ChatList />
       </div>

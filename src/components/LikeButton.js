@@ -31,7 +31,7 @@ class LikeButton extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <IconButton aria-label="Like Button" onClick={this.handleClick}>
+      <IconButton className={this.props.className} aria-label="Like Button" onClick={this.handleClick}>
         {this.state.liked ? <ThumbUp /> : <ThumbUpOutlined />}
       </IconButton>
     )
