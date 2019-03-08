@@ -12,6 +12,30 @@ import reducers from './reducers';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
+   currentBoard: {
+    id: 1,
+    owner: "carter",
+    title: "We need more ideas for how to run the country",
+    ideas: [
+      {
+        id: 1,
+        owner: "carter",
+        board: 1,
+        text: "We need more naps throughout the day",
+        comments: [ 
+          {
+            owner: "carter",
+            text: "This my great new idea!"
+          },
+          {
+            owner: "Conner",
+            text: "wow, this idea is so great! Carter for pres 2024"
+          }
+        ]
+
+      },
+    ]
+  }
 }
 
 const store = createStore(
