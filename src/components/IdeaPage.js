@@ -7,7 +7,8 @@ import Divider from '@material-ui/core/Divider';
 const styles = theme => ({
   root: {
     width: '50%',
-    margin: 'auto'
+    margin: 'auto',
+    ...theme.spacing.page
   }
 });
 

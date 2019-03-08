@@ -16,7 +16,7 @@ const theme = createMuiTheme({
   typography: { useNextVariants: true },
   spacing: {
     page: {
-      topMargin: '20px'
+      marginTop: '20px'
     }
   }
 });
