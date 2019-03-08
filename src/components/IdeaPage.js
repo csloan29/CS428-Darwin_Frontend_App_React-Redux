@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ChatList from './ChatList';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import LikeButton from './LikeButton';
 
 const styles = theme => ({
   root: {
@@ -18,12 +19,13 @@ class IdeaPage extends Component {
     return (
       <div className={classes.root}>
         <Typography variant="h3" gutterBottom>
-          Title of Idea/Idea Name
+          Title of Idea
         </Typography>
         <Typography color="textSecondary" gutterBottom>
           Idea description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
         </Typography>
-        <Divider variant="middle" />
+        <LikeButton />
+        <Divider/>
         <ChatList />
       </div>
     )
