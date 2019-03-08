@@ -12,6 +12,9 @@ const styles = theme => ({
   },
   loginForm: {
     textAlign: 'center'
+  },
+  button: {
+    marginTop: "20px"
   }
 });
 
