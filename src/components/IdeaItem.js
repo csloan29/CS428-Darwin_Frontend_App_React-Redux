@@ -27,8 +27,14 @@ const styles = theme => {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
   },
+  explanation: {
+    margin: "0 0 15px 0",
+  },
   details: {
-    alignItems: 'center',
+    display: "block",
+  },
+  chatList: {
+    margin: "15px 0 0 0",
   },
 }};
 
@@ -51,14 +57,14 @@ class IdeaItem extends Component {
             <LikeButton></LikeButton>
           </div>
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div>
+        <ExpansionPanelDetails className={classes.details}>
+          <div className={classes.explanation}>
             <Typography variant="caption">
               This is where the explanation of the idea is going to go, should someone want to add an explanation.
             </Typography>
           </div>
           <Divider />
-          <ChatList />
+          <ChatList className={classes.chatList}/>
         </ExpansionPanelDetails>
         <Divider />
         <ExpansionPanelActions>
