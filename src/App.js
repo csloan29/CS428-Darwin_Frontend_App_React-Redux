@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import LoginPage from './components/LoginPage';
 import FindBoardPage from './components/FindBoardPage';
-import ViewBoardPage from './components/ViewBoardPage';
+import BoardPage from './components/BoardPage';
 import IdeaPage from './components/IdeaPage';
 import Header from './components/Header';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -31,7 +31,7 @@ class App extends Component {
               <Route exact path="/" component={LoginPage}/>
               <Route exact path="/login" component={LoginPage}/>
               <Route exact path="/boards" component={FindBoardPage}/>
-              <Route exact path="/boards/:id" component={ViewBoardPage}/>
+              <Route exact path="/boards/:id" component={BoardPage}/>
               <Route exact path="/boards/:id/:ideaID" component={IdeaPage}/>
             </div>
           </Router>

@@ -14,21 +14,21 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const initialState = {
    currentBoard: {
     id: 1,
-    owner: "carter",
+    owner: "Carter",
     title: "We need more ideas for how to run the country",
     ideas: [
       {
         id: 1,
-        owner: "carter",
+        owner: "Carter",
         board: 1,
         text: "We need more naps throughout the day",
         comments: [ 
           {
-            owner: "carter",
+            owner: "Carter",
             text: "This my great new idea!"
           },
           {
-            owner: "Conner",
+            owner: "Connor",
             text: "wow, this idea is so great! Carter for pres 2024"
           }
         ]
