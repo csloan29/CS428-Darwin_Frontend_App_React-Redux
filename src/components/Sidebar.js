@@ -8,6 +8,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SearchIcon from '@material-ui/icons/Search';
 import ViewListIcon from '@material-ui/icons/ViewList';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const styles = {
   list: {
@@ -35,6 +36,12 @@ class Sidebar extends Component {
             <ListItem button key={"View Last Board"}>
               <ListItemIcon><ViewListIcon /></ListItemIcon>
               <ListItemText primary={"View Last Board"} />
+            </ListItem>
+          </Link>
+          <Link to='/' style={{textDecoration: 'none'}}>
+            <ListItem button key={"Logout"}>
+              <ListItemIcon><ArrowBackIcon /></ListItemIcon>
+              <ListItemText primary={"Sign Out"} />
             </ListItem>
           </Link>
         </List>
