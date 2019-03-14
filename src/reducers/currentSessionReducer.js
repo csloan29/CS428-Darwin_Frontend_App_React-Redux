@@ -11,7 +11,13 @@ export default function(state = {}, action){
         }
       };
     case ActionTypes.LOGIN: //this ought to change
-      return state;
+      console.log("LOGIN", action.payload);
+      return {
+        isLoggedIn: true,
+        user: {
+
+        }
+      };
     default:
       return state;
   }

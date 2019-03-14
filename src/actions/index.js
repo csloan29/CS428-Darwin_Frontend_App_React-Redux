@@ -9,12 +9,18 @@ export function login(user, password) {
   }
 }
 
-export function register(user, password, email) {
+export function register(user, password, firstName, lastName, email) {
   //make some API call...
-  //const promise = axios.post(`${baseURL}/register`);
+  const promise = axios.post(`${baseURL}/register`, {
+    user,
+    password,
+    firstName,
+    lastName,
+    email
+  });
   return {
     type: ActionTypes.REGISTER,
-    payload: {}//promise
+    payload: promise
   }
 }
 

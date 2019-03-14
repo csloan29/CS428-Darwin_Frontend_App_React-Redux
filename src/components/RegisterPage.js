@@ -32,6 +32,8 @@ class RegisterPage extends Component {
       user: "",
       password: "",
       email: "",
+      firstName: "",
+      lastName: "",
       first: true
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -46,14 +48,14 @@ class RegisterPage extends Component {
   }
 
   onSubmit() {
-    if(!this.state.user || !this.state.password || !this.state.email) {
+    if(!this.state.user || !this.state.password || !this.state.email || !this.state.firstName || !this.state.lastName) {
       this.setState({
         first: false
       });
       return; //missing data...
     }
     //do some sort of authentication, including storing the session ID/token or something in session storage or a cookie
-    this.props.register(this.state.user, this.state.password, this.state.email);
+    this.props.register(this.state.user, this.state.password, this.state.firstName, this.state.lastName, this.state.email);
   }
 
   isError(name) {
@@ -93,16 +95,36 @@ class RegisterPage extends Component {
             onChange={this.handleChange("password")}
           />
           <br/>
-            <TextField
-              error={this.isError("email")}
-              id="email"
-              label="Email"
-              type="email"
-              className={classes.textField}
-              margin="normal"
-              onChange={this.handleChange("email")}
-            />
-            <br/>
+          <TextField
+            error={this.isError("firstName")}
+            id="firstName"
+            label="First Name"
+            type="text"
+            className={classes.textField}
+            margin="normal"
+            onChange={this.handleChange("firstName")}
+          />
+          <br/>
+          <TextField
+            error={this.isError("lastName")}
+            id="lastName"
+            label="Last Name"
+            type="text"
+            className={classes.textField}
+            margin="normal"
+            onChange={this.handleChange("lastName")}
+          />
+          <br/>
+          <TextField
+            error={this.isError("email")}
+            id="email"
+            label="Email"
+            type="email"
+            className={classes.textField}
+            margin="normal"
+            onChange={this.handleChange("email")}
+          />
+          <br/>
           <Button variant="contained" color="primary" className={classes.button} onClick={this.onSubmit}>
             Register
           </Button>
@@ -125,8 +147,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    register: (user, password, email) => {
-      dispatch(register(user, password, email));
+    register: (user, password, firstName, lastName, email) => {
+      dispatch(register(user, password, firstName, lastName, email));
     }
   }
 }
