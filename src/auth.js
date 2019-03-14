@@ -14,3 +14,7 @@ export function getToken() {
 export function saveToken(token) {
   window.localStorage.setItem(authToken, token);
 }
+
+export function signOut() {
+  window.localStorage.removeItem(authToken);
+}
