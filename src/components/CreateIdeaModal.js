@@ -114,10 +114,9 @@ class CreateIdeaModal extends Component {
             />
             <TextField
               id="filled-multiline-static"
-              label="Explanation"
+              label="Explanation of idea"
               multiline
               rows="3"
-              defaultValue="Explain your idea a little more..."
               className={classes.textField}
               margin="normal"
               variant="outlined"
