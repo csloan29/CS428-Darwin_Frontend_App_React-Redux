@@ -1,3 +1,19 @@
+export function login(user, password) {
+  //make some API call...
+  return {
+    type: ActionTypes.LOGIN,
+    payload: {}
+  }
+}
+
+export function register(user, password, email) {
+  //make some API call...
+  return {
+    type: ActionTypes.REGISTER,
+    payload: {}
+  }
+}
+
 export function createBoard(title) {
   //make some API call...
   console.log("Creating board with title:", title);
@@ -41,6 +57,8 @@ export function createComment(text) {
 }
 
 let ActionTypes = {
+  LOGIN: 'LOGIN',
+  REGISTER: 'REGISTER',
   CREATE_BOARD: 'CREATE_BOARD',
   VIEW_BOARD: 'VIEW_BOARD',
   //CREATE IDEA

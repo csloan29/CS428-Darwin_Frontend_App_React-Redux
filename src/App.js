@@ -3,9 +3,12 @@ import LoginPage from './components/LoginPage';
 import FindBoardPage from './components/FindBoardPage';
 import BoardPage from './components/BoardPage';
 import IdeaPage from './components/IdeaPage';
+import RegisterPage from './components/RegisterPage';
 import Header from './components/Header';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { getIsLoggedIn } from './reducers';
 import './App.css';
 
 const theme = createMuiTheme({
@@ -20,20 +23,44 @@ const theme = createMuiTheme({
   }
 });
 
+const Authenticated = (props) => {
+  return (
+    <div>
+      <Header />
+      <Switch>
+        <Route exact path="/boards" component={FindBoardPage}/>
+        <Route exact path="/boards/:id" component={BoardPage}/>
+        <Route exact path="/boards/:id/:ideaID" component={IdeaPage}/>
+        <Redirect from="/" to="/boards"/>
+      </Switch>
+    </div>
+  );
+};
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.enforceLogin = this.enforceLogin.bind(this);
+  }
+
+  enforceLogin() {
+    if(this.props.isLoggedIn) {
+      return <Authenticated />;
+    }
+    return <Redirect to='/login' />
+  }
+
   render() {
     return (
       <div>
         <MuiThemeProvider theme={theme}>
           <Router>
-            <div>
-              <Header />
-              <Route exact path="/" component={LoginPage}/>
+            <Switch>
               <Route exact path="/login" component={LoginPage}/>
-              <Route exact path="/boards" component={FindBoardPage}/>
-              <Route exact path="/boards/:id" component={BoardPage}/>
-              <Route exact path="/boards/:id/:ideaID" component={IdeaPage}/>
-            </div>
+              <Route exact path="/register" component={RegisterPage}/>
+              <Route path="/" render={this.enforceLogin}/>
+            </Switch>
           </Router>
         </MuiThemeProvider>
       </div>
@@ -41,4 +68,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    isLoggedIn: getIsLoggedIn(state)
+  }
+};
+
+export default connect(mapStateToProps)(App);

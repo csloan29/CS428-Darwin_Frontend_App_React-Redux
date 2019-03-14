@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login } from '../actions';
+import { register } from '../actions';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -18,18 +18,19 @@ const styles = theme => ({
   button: {
     marginTop: "20px"
   },
-  registerLink: {
+  loginLink: {
     marginTop: '10px'
   }
 });
 
-class LoginPage extends Component {
+class RegisterPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       user: "",
       password: "",
+      email: "",
       first: true
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -51,7 +52,7 @@ class LoginPage extends Component {
       return; //missing data...
     }
     //do some sort of authentication, including storing the session ID/token or something in session storage or a cookie
-    this.props.login(this.state.user, this.state.password);
+
     this.props.history.push('/boards');
   }
 
@@ -89,12 +90,22 @@ class LoginPage extends Component {
             onChange={this.handleChange("password")}
           />
           <br/>
+            <TextField
+              error={this.isError("email")}
+              id="email"
+              label="Email"
+              type="email"
+              className={classes.textField}
+              margin="normal"
+              onChange={this.handleChange("email")}
+            />
+            <br/>
           <Button variant="contained" color="primary" className={classes.button} onClick={this.onSubmit}>
-            Login
+            Register
           </Button>
-          <div className={classes.registerLink}>
-            <Link to='/register'>
-              Need to Register?
+          <div className={classes.loginLink}>
+            <Link to='/login'>
+              Already Have an Account?
             </Link>
           </div>
         </form>
@@ -105,10 +116,10 @@ class LoginPage extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (user, password) => {
-      dispatch(login(user, password));
+    register: (user, password, email) => {
+      dispatch(register(user, password, email));
     }
   }
 }
 
-export default withStyles(styles)(withRouter(connect(null, mapDispatchToProps)(LoginPage)));
+export default withStyles(styles)(withRouter(connect(null, mapDispatchToProps)(RegisterPage)));

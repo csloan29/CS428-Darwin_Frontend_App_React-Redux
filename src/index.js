@@ -9,10 +9,19 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import promise from 'redux-promise';
 import reducers from './reducers';
 
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './sagas';
+
+import { isLoggedIn } from './auth';
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
-   currentBoard: {
+  currentSession: {
+    isLoggedIn: isLoggedIn(),
+    user: null
+  },
+  currentBoard: {
     id: 1,
     owner: "Carter",
     title: "We need more ideas for how to run the country",
@@ -22,7 +31,7 @@ const initialState = {
         owner: "Carter",
         board: 1,
         text: "We need more naps throughout the day",
-        comments: [ 
+        comments: [
           {
             owner: "Carter",
             text: "This my great new idea!"
@@ -38,11 +47,15 @@ const initialState = {
   }
 }
 
+const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(
   reducers,
   initialState,
-  composeEnhancers(applyMiddleware(promise))
+  composeEnhancers(applyMiddleware(promise, sagaMiddleware))
 )
+
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
