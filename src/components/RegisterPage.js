@@ -6,8 +6,15 @@ import { register } from '../actions';
 import { getIsLoggedIn } from '../reducers';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
+  outerContainer: {
+    marginTop: "7em"
+  },
+  title: {
+    textAlign: 'center',
+  },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -74,7 +81,8 @@ class RegisterPage extends Component {
       return <Redirect to='/'/>
     }
     return (
-      <div>
+      <div className={classes.outerContainer}>
+      <Typography className={classes.title} variant='h2' gutterBottom>DARWIN</Typography>
         <form autoComplete="off" className={classes.loginForm}>
           <TextField
             error={this.isError("user")}
