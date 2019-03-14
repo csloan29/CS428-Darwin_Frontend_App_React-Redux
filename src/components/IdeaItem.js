@@ -16,33 +16,46 @@ import LikeButton from './LikeButton';
 import ChatList from './ChatList';
 
 const styles = theme => {
-  console.log("Text", theme);
   return {
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    flexBasis: '33.33%',
-    flexShrink: 0,
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
-  explanation: {
-    margin: "0 0 15px 0",
-  },
-  details: {
-    display: "block",
-  },
-  chatList: {
-    margin: "15px 0 0 0",
-  },
+    root: {
+      margin: "0 0 10px 0",
+    },
+    ideaText: {
+      display: 'block',
+    },
+    likeButton: {
+      margin: "0 10px 0 0",
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+    },
+    secondaryHeading: {
+      fontSize: theme.typography.pxToRem(15),
+      color: theme.palette.text.secondary,
+      margin: "5px 0 0 0",
+    },
+    explanation: {
+      margin: "0 0 15px 0",
+    },
+    details: {
+      display: "block",
+    },
+    chatList: {
+      margin: "15px 0 0 0",
+    },
 }};
 
 class IdeaItem extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.onSeeMore = this.onSeeMore.bind(this);
+  }
+
   onSeeMore() {
     //TODO: finish this link
-    this.props.history.push(`/boards/`);
+    this.props.history.push(`/boards/${this.props.match.params.id}/`);
   }
 
   render() {
@@ -51,22 +64,23 @@ class IdeaItem extends Component {
       <div className={classes.root}>
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography className={classes.heading}>Title here</Typography>
-          <Typography className={classes.secondaryHeading}>number of votes here</Typography>
           <div>
-            <LikeButton></LikeButton>
+            <LikeButton className={classes.likeButton}></LikeButton>
+          </div>
+          <div className={classes.ideaText}>
+            <Typography className={classes.heading}>{this.props.title}</Typography>
+            <Typography className={classes.secondaryHeading}>Total Votes: {this.props.votes}</Typography>
           </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
           <div className={classes.explanation}>
             <Typography variant="caption">
-              This is where the explanation of the idea is going to go, should someone want to add an explanation.
+              {this.props.explanation}
             </Typography>
           </div>
           <Divider />
-          <ChatList className={classes.chatList}/>
+          <ChatList className={classes.chatList} chatList={this.props.chatList}/>
         </ExpansionPanelDetails>
-        <Divider />
         <ExpansionPanelActions>
           <Button size="small" color="primary" onClick={this.onSeeMore}>
             See More...

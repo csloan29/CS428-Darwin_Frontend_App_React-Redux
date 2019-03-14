@@ -23,7 +23,7 @@ const styles = theme => {
     textField: {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
-      width: 200,
+      width: 350,
     },
     paper: {
       position: 'absolute',
@@ -102,17 +102,26 @@ class CreateIdeaModal extends Component {
         >
           <div style={getModalStyle()} className={classes.paper}>
             <Typography variant="h6" id="modal-title">
-              Add Idea
+              ADD NEW IDEA
             </Typography>
             <TextField
               id="boardTitle"
               error={this.isError("title")}
-              label="Idea here"
+              label="Enter idea here"
               className={classes.textField}
               margin="normal"
               onChange={this.handleChange("title")}
             />
-            <br/>
+            <TextField
+              id="filled-multiline-static"
+              label="Explanation"
+              multiline
+              rows="3"
+              defaultValue="Explain your idea a little more..."
+              className={classes.textField}
+              margin="normal"
+              variant="outlined"
+            />
             <div>
               <Button variant="text" color="primary" className={classes.button} onClick={this.createBoard}>
                 Add
