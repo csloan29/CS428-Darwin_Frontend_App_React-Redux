@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions';
+import { getIsLoggedIn } from '../reducers';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -67,6 +68,9 @@ class LoginPage extends Component {
 
   render() {
     const { classes } = this.props;
+    if(this.props.isLoggedIn) {
+      return <Redirect to='/'/>
+    }
     return (
       <div>
         <form autoComplete="off" className={classes.loginForm}>
@@ -103,6 +107,12 @@ class LoginPage extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: getIsLoggedIn(state)
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (user, password) => {
@@ -111,4 +121,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withStyles(styles)(withRouter(connect(null, mapDispatchToProps)(LoginPage)));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage)));

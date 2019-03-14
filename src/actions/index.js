@@ -1,4 +1,5 @@
 import axios from 'axios';
+const baseURL = 'http://ec2-35-155-143-61.us-west-2.compute.amazonaws.com:7004';
 
 export function login(user, password) {
   //make some API call...
@@ -10,9 +11,10 @@ export function login(user, password) {
 
 export function register(user, password, email) {
   //make some API call...
+  //const promise = axios.post(`${baseURL}/register`);
   return {
     type: ActionTypes.REGISTER,
-    payload: {}
+    payload: {}//promise
   }
 }
 

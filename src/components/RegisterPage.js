@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { register } from '../actions';
+import { getIsLoggedIn } from '../reducers';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
@@ -45,15 +46,14 @@ class RegisterPage extends Component {
   }
 
   onSubmit() {
-    if(!this.state.user || !this.state.password) {
+    if(!this.state.user || !this.state.password || !this.state.email) {
       this.setState({
         first: false
       });
       return; //missing data...
     }
     //do some sort of authentication, including storing the session ID/token or something in session storage or a cookie
-
-    this.props.history.push('/boards');
+    this.props.register(this.state.user, this.state.password, this.state.email);
   }
 
   isError(name) {
@@ -68,6 +68,9 @@ class RegisterPage extends Component {
 
   render() {
     const { classes } = this.props;
+    if(this.props.isLoggedIn) {
+      return <Redirect to='/'/>
+    }
     return (
       <div>
         <form autoComplete="off" className={classes.loginForm}>
@@ -114,6 +117,12 @@ class RegisterPage extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: getIsLoggedIn(state)
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     register: (user, password, email) => {
@@ -122,4 +131,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withStyles(styles)(withRouter(connect(null, mapDispatchToProps)(RegisterPage)));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(RegisterPage)));
