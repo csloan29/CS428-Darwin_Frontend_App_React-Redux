@@ -10,7 +10,8 @@ import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
   outerContainer: {
-    marginTop: "7em"
+    marginTop: "7em",
+    textAlign: 'center',
   },
   title: {
     textAlign: 'center',
@@ -18,10 +19,15 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
+    width: '200px',
   },
   loginForm: {
-    textAlign: 'center'
+    textAlign: 'center',
+    margin: 'auto',
+    border: '2px solid black',
+    width: '250px',
+    borderRadius: '25px',
+    padding: "10px 0 10px 0",
   },
   button: {
     marginTop: "20px"

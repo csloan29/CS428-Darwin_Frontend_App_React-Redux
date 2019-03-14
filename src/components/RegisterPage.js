@@ -21,7 +21,12 @@ const styles = theme => ({
     width: 200,
   },
   loginForm: {
-    textAlign: 'center'
+    textAlign: 'center',
+    margin: 'auto',
+    border: '2px solid black',
+    width: '250px',
+    borderRadius: '25px',
+    padding: "10px 0 10px 0",
   },
   button: {
     marginTop: "20px"
