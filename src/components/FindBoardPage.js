@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CreateBoardModal from './CreateBoardModal';
 import { Typography } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { viewBoard } from '../actions';
 
 const styles = theme => ({
   container: {
@@ -36,6 +38,7 @@ class FindBoardPage extends Component {
       first: false
     });
     if(this.state.boardID) { //do other checks to see if valid?
+      this.props.viewBoard(this.state.boardID);
       this.props.history.push(`/boards/${this.state.boardID}`);
     }
   }
@@ -86,4 +89,12 @@ class FindBoardPage extends Component {
   }
 }
 
-export default withStyles(styles)(FindBoardPage);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    viewBoard: (boardID) => {
+      dispatch(viewBoard(boardID));
+    }
+  }
+}
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(FindBoardPage));

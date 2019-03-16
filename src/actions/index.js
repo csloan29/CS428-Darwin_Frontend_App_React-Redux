@@ -35,11 +35,11 @@ export function createBoard(title) {
 }
 
 export function viewBoard(boardID) {
-  //make some API call...
   console.log("Retrieving board with ID:", boardID);
+  const promise = axios.get(`${baseURL}/boards/${boardID}/`);
   return {
     type: ActionTypes.VIEW_BOARD,
-    payload: {}
+    payload: promise
   }
 }
 
