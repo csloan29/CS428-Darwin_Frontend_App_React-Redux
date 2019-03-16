@@ -14,6 +14,10 @@ const styles = theme => ({
     margin: 'auto',
     width: '90%',
   },
+  noIdeasWarning: {
+    textAlign: 'center',
+    margin: '50px 0 0 0',
+  },
   ideaList: {
 
   },
@@ -51,17 +55,21 @@ class BoardPage extends Component {
     }
   }
 
-  renderIdeaList() {
+  renderIdeaList(classes) {
     //TODO: get the initial state from the store
     var ideas = this.props.currentBoard.ideas;
     if (!ideas || ideas.length == 0) {
-      return "NO IDEAS IN LIST YET";
+      return (
+        <Typography variant="h5" color="textSecondary" className={classes.noIdeasWarning}>
+          No ideas added yet...
+        </Typography>
+      );
     }
     var ideaItems = ideas.map(function(idea) {
               return <IdeaItem 
                       key={idea.id}
                       id={idea.id}
-                      title={idea.title} 
+                      title={idea.title}
                       total_votes={idea.total_votes} 
                       description={idea.description}
                       comments={idea.comments}
@@ -77,7 +85,7 @@ class BoardPage extends Component {
     return (
       <div className={classes.ideaColumn}>
         <Typography variant="h4" className={classes.boardTitle} gutterBottom>
-          This is a really long board title to test the limits of the div
+          {this.props.currentBoard.name}
         </Typography>
         <CreateIdeaModal className={classes.addButton}></CreateIdeaModal>
         <div className={classes.subTitle}>
@@ -89,7 +97,7 @@ class BoardPage extends Component {
           </Typography>
         </div>
         <div className={classes.ideaList}>
-            {this.renderIdeaList()}
+            {this.renderIdeaList(classes)}
         </div>
       </div>
     )
