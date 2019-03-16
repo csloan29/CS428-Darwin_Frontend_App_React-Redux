@@ -6,6 +6,8 @@ import CreateBoardModal from './CreateBoardModal';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { viewBoard } from '../actions';
+import { getCurrentBoardID } from '../reducers';
+import { Redirect } from 'react-router-dom';
 
 const styles = theme => ({
   container: {
@@ -39,7 +41,6 @@ class FindBoardPage extends Component {
     });
     if(this.state.boardID) { //do other checks to see if valid?
       this.props.viewBoard(this.state.boardID);
-      this.props.history.push(`/boards/${this.state.boardID}`);
     }
   }
 
@@ -63,6 +64,9 @@ class FindBoardPage extends Component {
 
   render() {
     const { classes } = this.props;
+    if(this.props.currentBoardID) {
+      return <Redirect to={`/boards/${this.props.currentBoardID}`}/>
+    }
     return (
       <div className={classes.container}>
         <Typography className={classes.title} variant='h2' gutterBottom>Find a Board</Typography>
@@ -89,6 +93,12 @@ class FindBoardPage extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    currentBoardID: getCurrentBoardID(state)
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     viewBoard: (boardID) => {
@@ -97,4 +107,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withStyles(styles)(connect(null, mapDispatchToProps)(FindBoardPage));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(FindBoardPage));

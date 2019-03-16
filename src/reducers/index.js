@@ -18,7 +18,7 @@ export default rootReducer;
     }
   },
   currentBoard: {
-    boardID: <string>,
+    id: <string>,
     ideas: [{
 
     }, ...],
@@ -30,4 +30,12 @@ export default rootReducer;
 
 export function getIsLoggedIn(state) {
   return state.currentSession.isLoggedIn;
+}
+
+export function getUserID(state) {
+  return state.currentSession.user.id;
+}
+
+export function getCurrentBoardID(state) {
+  return state.currentBoard.id;
 }

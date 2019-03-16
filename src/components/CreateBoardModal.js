@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { Redirect } from 'react-router-dom';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -53,8 +54,8 @@ class CreateBoardModal extends Component {
       first: false
     })
     if(this.state.title) {
-      //do something
       this.props.createBoard(this.state.title);
+      this.toggleModal();
     }
   }
 
@@ -130,8 +131,8 @@ class CreateBoardModal extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createBoard: (title) => {
-      dispatch(createBoard(title));
+    createBoard: (title, ownerID) => {
+      dispatch(createBoard(title, ownerID));
     }
   }
 }

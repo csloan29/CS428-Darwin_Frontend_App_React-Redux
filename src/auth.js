@@ -1,5 +1,6 @@
 const authToken = 'AUTHORIZATION_TOKEN';
 const userStorage = 'USER_INFORMATION';
+const boardStorage = 'BOARD_INFORMATION';
 
 export function isLoggedIn() {
   if(window.localStorage.getItem(authToken)) {

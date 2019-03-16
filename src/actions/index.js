@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getToken } from '../auth';
 const baseURL = 'http://ec2-35-155-143-61.us-west-2.compute.amazonaws.com:7004';
 
 export function login(user, password) {
@@ -26,17 +27,27 @@ export function register(user, password, firstName, lastName) {
 }
 
 export function createBoard(title) {
-  //make some API call...
   console.log("Creating board with title:", title);
+  const promise = axios.post(`${baseURL}/boards/`, {
+    name: title
+  }, {
+    headers: {
+      Authorization: `Token ${getToken()}`
+    }
+  });
   return {
     type: ActionTypes.CREATE_BOARD,
-    payload: {}
+    payload: promise
   }
 }
 
 export function viewBoard(boardID) {
   console.log("Retrieving board with ID:", boardID);
-  const promise = axios.get(`${baseURL}/boards/${boardID}/`);
+  const promise = axios.get(`${baseURL}/boards/${boardID}/`, {
+    headers: {
+      Authorization: `Token ${getToken()}`
+    }
+  });
   return {
     type: ActionTypes.VIEW_BOARD,
     payload: promise
@@ -51,7 +62,7 @@ export function createIdea(title) {
   }
 }
 
-export function ViewIdea(ideaID) {
+export function viewIdea(ideaID) {
   console.log("Retreiving idea with id: ", ideaID);
   return {
     type: ActionTypes.VIEW_IDEA,
