@@ -24,7 +24,18 @@ export default function(state = {}, action){
         return newState;
       }
     case ActionTypes.VOTE:
-      console.log("Data returned from voting: ", action.payload);
+      if (action.payload.status === 200 || action.payload.status === 201) {
+        console.log("Data returned from voting: ", action.payload, " on id: ", action.meta.id);
+        var newState = {
+          ...state
+        }
+        for (let ideaIndex in newState.ideas) {
+          if (newState.ideas[ideaIndex].id === action.meta.id) {
+            newState.ideas[ideaIndex].has_voted = !newState.ideas[ideaIndex].has_voted;
+          }
+        }
+        return newState;
+      }
       return state;
     default:
       return state;

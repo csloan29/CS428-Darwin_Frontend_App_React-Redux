@@ -82,7 +82,10 @@ export function vote(ideaID) {
   });
   return {
     type: ActionTypes.VOTE,
-    payload: promise
+    payload: promise,
+    meta: {
+      id: ideaID,
+    }
   }
 }
 
