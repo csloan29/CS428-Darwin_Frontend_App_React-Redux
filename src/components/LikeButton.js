@@ -21,8 +21,9 @@ class LikeButton extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick(event) {
     console.log("Like/unlike");
+    event.stopPropagation();
     this.setState({
       liked: !this.state.liked
     })

@@ -3,18 +3,20 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CreateBoardModal from './CreateBoardModal';
+import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
+  container: {
+    marginTop: "7em",
+    textAlign: 'center'
+  },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 200,
   },
-  container: {
-    textAlign: 'center'
-  },
   createBoard: {
-    marginTop: '30px'
+    margin: '30px 0 40px 0',
   }
 });
 
@@ -60,6 +62,7 @@ class FindBoardPage extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.container}>
+        <Typography className={classes.title} variant='h2' gutterBottom>Find a Board</Typography>
         <CreateBoardModal className={classes.createBoard}/>
         <p>
           OR

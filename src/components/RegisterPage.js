@@ -26,7 +26,7 @@ const styles = theme => ({
     border: '2px solid black',
     width: '250px',
     borderRadius: '25px',
-    padding: "10px 0 10px 0",
+    padding: "10px 0 20px 0",
   },
   button: {
     marginTop: "20px"
