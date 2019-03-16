@@ -9,6 +9,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import SearchIcon from '@material-ui/icons/Search';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { signOut } from '../actions';
+import { connect } from 'react-redux';
 
 const styles = {
   list: {
@@ -20,6 +22,16 @@ const styles = {
 };
 
 class Sidebar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.logOut = this.logOut.bind(this);
+  }
+
+  logOut() {
+    this.props.signOut();
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -38,7 +50,7 @@ class Sidebar extends Component {
               <ListItemText primary={"View Last Board"} />
             </ListItem>
           </Link>
-          <Link to='/' style={{textDecoration: 'none'}}>
+          <Link to='/' style={{textDecoration: 'none'}} onClick={this.logOut}>
             <ListItem button key={"Logout"}>
               <ListItemIcon><ArrowBackIcon /></ListItemIcon>
               <ListItemText primary={"Sign Out"} />
@@ -65,4 +77,12 @@ class Sidebar extends Component {
   }
 }
 
-export default withStyles(styles)(Sidebar);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signOut: () => {
+      dispatch(signOut());
+    }
+  }
+}
+
+export default withStyles(styles)(connect(null, mapDispatchToProps)(Sidebar));

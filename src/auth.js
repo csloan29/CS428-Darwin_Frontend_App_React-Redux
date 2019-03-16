@@ -25,6 +25,6 @@ export function getUser() {
   return JSON.parse(window.localStorage.getItem(userStorage));
 }
 
-export function signOut() {
+export function clearLocalSignIn() {
   window.localStorage.removeItem(authToken);
 }

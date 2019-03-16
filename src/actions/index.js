@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from '../auth';
+import { getToken, clearLocalSignIn } from '../auth';
 const baseURL = 'http://ec2-35-155-143-61.us-west-2.compute.amazonaws.com:7004';
 
 export function login(user, password) {
@@ -23,6 +23,15 @@ export function register(user, password, firstName, lastName) {
   return {
     type: ActionTypes.REGISTER,
     payload: promise
+  }
+}
+
+export function signOut() {
+  clearLocalSignIn();
+  console.log("action to sign out");
+  return {
+    type: ActionTypes.SIGN_OUT,
+    payload: {}
   }
 }
 
@@ -100,6 +109,7 @@ export function createComment(text) {
 let ActionTypes = {
   LOGIN: 'LOGIN',
   REGISTER: 'REGISTER',
+  SIGN_OUT: 'SIGN_OUT',
   CREATE_BOARD: 'CREATE_BOARD',
   VIEW_BOARD: 'VIEW_BOARD',
   CREATE_IDEA: 'CREATE_IDEA',
