@@ -61,9 +61,7 @@ class CreateBoardModal extends Component {
 
   toggleModal() {
     this.setState({
-      modal: !this.state.modal
-    })
-    this.setState({
+      modal: !this.state.modal,
       first: true,
       title: ""
     })
