@@ -12,56 +12,17 @@ import reducers from './reducers';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 
-import { isLoggedIn } from './auth';
+import { isLoggedIn, getUser } from './auth';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initialState = {
   currentBoard: {
-   id: 1,
-   owner: "Carter",
-   title: "We need more ideas for how to run the country",
-   ideas: [
-     {
-       id: 1,
-       owner: "Carter",
-       board: 1,
-       votes: 5,
-       text: "We need more naps throughout the day",
-       explanation: "This is my great explanation of my idea",
-       comments: [ 
-         {
-           owner: "Carter",
-           text: "This my great new idea!"
-         },
-         {
-           owner: "Connor",
-           text: "wow, this idea is so great! Carter for pres 2024"
-         }
-       ]
-
-     },
-     {
-      id: 2,
-      owner: "Connor",
-      board: 2,
-      votes: 2,
-      text: "We need to actually be productive and fill out our spreadsheets on time",
-      explanation: "This is my great explanation of my idea",
-      comments: [ 
-        {
-          owner: "Connor",
-          text: "This my idea. I'm right, too"
-        },
-        {
-          owner: "Carter",
-          text: "wow, this idea is so great, also!"
-        }
-      ]
-
-    },
-   ]
- }
+  },
+  currentSession: {
+    isLoggedIn: isLoggedIn(),
+    user: getUser()
+  }
 }
 
 const sagaMiddleware = createSagaMiddleware();

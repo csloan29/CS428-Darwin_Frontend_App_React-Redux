@@ -2,23 +2,22 @@ import axios from 'axios';
 const baseURL = 'http://ec2-35-155-143-61.us-west-2.compute.amazonaws.com:7004';
 
 export function login(user, password) {
-  const promise = axios.post(`${baseURL}/login`, {
-    user,
+  const promise = axios.post(`${baseURL}/login/`, {
+    username: user,
     password
   });
   return {
     type: ActionTypes.LOGIN,
-    payload: {}
+    payload: promise
   }
 }
 
-export function register(user, password, firstName, lastName, email) {
+export function register(user, password, firstName, lastName) {
   const promise = axios.post(`${baseURL}/register/`, {
     username: user,
     password,
     first_name: firstName,
-    last_name: lastName,
-    email
+    last_name: lastName
   });
   return {
     type: ActionTypes.REGISTER,

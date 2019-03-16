@@ -1,4 +1,5 @@
 const authToken = 'AUTHORIZATION_TOKEN';
+const userStorage = 'USER_INFORMATION';
 
 export function isLoggedIn() {
   if(window.localStorage.getItem(authToken)) {
@@ -13,6 +14,14 @@ export function getToken() {
 
 export function saveToken(token) {
   window.localStorage.setItem(authToken, token);
+}
+
+export function saveUser(user) {
+  window.localStorage.setItem(userStorage, JSON.stringify(user));
+}
+
+export function getUser() {
+  return JSON.parse(window.localStorage.getItem(userStorage));
 }
 
 export function signOut() {
