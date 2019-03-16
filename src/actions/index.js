@@ -54,11 +54,20 @@ export function viewBoard(boardID) {
   }
 }
 
-export function createIdea(title) {
-  console.log("Creating idea with title: ", title);
+export function createIdea(title, description, boardID) {
+  console.log("Creating idea with title: ", title, " and explanation: ", description, " for id: ", boardID);
+  const promise = axios.post(`${baseURL}/ideas/`, {
+    title: title,
+    description: description,
+    board: boardID,
+  }, {
+    headers: {
+      Authorization: `Token ${getToken()}`
+    }
+  });
   return {
     type: ActionTypes.CREATE_IDEA,
-    payload: {}
+    payload: promise,
   }
 }
 
@@ -90,6 +99,8 @@ let ActionTypes = {
   REGISTER: 'REGISTER',
   CREATE_BOARD: 'CREATE_BOARD',
   VIEW_BOARD: 'VIEW_BOARD',
+  CREATE_IDEA: 'CREATE_IDEA',
+  VIEW_IDEA: 'VIEW_IDEA',
   VOTE: 'VOTE'
   //CREATE IDEA
   //VIEW IDEA
