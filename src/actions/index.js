@@ -71,11 +71,18 @@ export function createIdea(title, description, boardID) {
   }
 }
 
-export function viewIdea(ideaID) {
-  console.log("Retreiving idea with id: ", ideaID);
+export function vote(ideaID) {
+  console.log("Voting on idea with id: ", ideaID);
+  const promise = axios.post(`${baseURL}/vote/`, {
+    idea: ideaID
+  }, {
+    headers: {
+      Authorization: `Token ${getToken()}`
+    }
+  });
   return {
-    type: ActionTypes.VIEW_IDEA,
-    payload: {}
+    type: ActionTypes.VOTE,
+    payload: promise
   }
 }
 
@@ -94,6 +101,9 @@ let ActionTypes = {
   VIEW_BOARD: 'VIEW_BOARD',
   CREATE_IDEA: 'CREATE_IDEA',
   VIEW_IDEA: 'VIEW_IDEA',
+  VOTE: 'VOTE'
+  //CREATE IDEA
+  //VIEW IDEA
   //CREATE COMMENT
 }
 

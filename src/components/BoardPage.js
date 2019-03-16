@@ -15,7 +15,7 @@ const styles = theme => ({
     width: '90%',
   },
   ideaList: {
-    
+
   },
   boardTitle: {
     margin: "20px 0 20px 0",

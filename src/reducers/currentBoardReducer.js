@@ -23,6 +23,9 @@ export default function(state = {}, action){
         newState.ideas = state.ideas.concat([action.payload.data]);
         return newState;
       }
+    case ActionTypes.VOTE:
+      console.log("Data returned from voting: ", action.payload);
+      return state;
     default:
       return state;
   }
