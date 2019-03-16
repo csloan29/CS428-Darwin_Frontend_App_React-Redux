@@ -14,6 +14,9 @@ export default function(state = {}, action){
         return action.payload.data;
       }
       return state;
+    case ActionTypes.VOTE:
+      console.log("Data returned from voting: ", action.payload);
+      return state;
     default:
       return state;
   }

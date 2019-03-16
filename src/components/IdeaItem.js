@@ -65,7 +65,7 @@ class IdeaItem extends Component {
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <div>
-            <LikeButton className={classes.likeButton}></LikeButton>
+            <LikeButton liked={false} ideaID={this.props.ideaID} className={classes.likeButton}></LikeButton>
           </div>
           <div className={classes.ideaText}>
             <Typography className={classes.heading}>{this.props.title}</Typography>
@@ -97,4 +97,3 @@ IdeaItem.propTypes = {
 };
 
 export default withStyles(styles)(IdeaItem);
-

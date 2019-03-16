@@ -22,7 +22,7 @@ const initialState = {
        votes: 5,
        text: "We need more naps throughout the day",
        explanation: "This is my great explanation of my idea",
-       comments: [ 
+       comments: [
          {
            owner: "Carter",
            text: "This my great new idea!"
@@ -41,7 +41,7 @@ const initialState = {
       votes: 2,
       text: "We need to actually be productive and fill out our spreadsheets on time. I swear if we don't do this I'm going to flip my hat!",
       explanation: "This is my great explanation of my idea",
-      comments: [ 
+      comments: [
         {
           owner: "Connor",
           text: "This my idea. I'm right, too"
@@ -65,7 +65,7 @@ const styles = theme => ({
     width: '90%',
   },
   ideaList: {
-    
+
   },
   boardTitle: {
     margin: "20px 0 20px 0",
@@ -101,8 +101,9 @@ class BoardPage extends Component {
     var ideaItems = ideas.map(function(idea) {
               return <IdeaItem 
                       key={idea.id}
-                      title={idea.text} 
-                      votes={idea.votes} 
+                      ideaID={idea.id}
+                      title={idea.text}
+                      votes={idea.votes}
                       explanation={idea.explanation}
                       chatList={idea.comments}
                       >
@@ -142,4 +143,3 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default withStyles(styles)(connect(mapStateToProps, null)(BoardPage));
-
