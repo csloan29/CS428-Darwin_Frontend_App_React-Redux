@@ -63,13 +63,10 @@ class CreateBoardModal extends Component {
     this.setState({
       modal: !this.state.modal
     })
-    if(!this.state.modal) {
-      //if closed, reset the values
-      this.setState({
-        first: true,
-        title: ""
-      })
-    }
+    this.setState({
+      first: true,
+      title: ""
+    })
   }
 
   isError(name) {
