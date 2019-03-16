@@ -18,12 +18,28 @@ export default rootReducer;
     }
   },
   currentBoard: {
+    name: <string>,
     id: <string>,
+    votes_remaining,
+    is_owner: <bool>,
     ideas: [{
-
+    		id: <int>,
+    		title: <string>,
+    		description: <string>,
+    		owner: {id: <int> }, //this attaches to a user ID,
+    		is_owner: <boolean>,
+    		board: {id: <int>},
+    		alive: <bool>,
+    		has_voted: <bool>,
+    		comments: [{ //this is ordered by time
+    			user: <int>, //this int is an owner ID
+    			idea: <int>,
+    			message: <string>,
+    			timestamp: <string>
+    		}, ...]
     }, ...],
-    isAdmin: <bool>,
-    etc.
+    alive: <bool>, //whether or not the admin started the voting process
+    total_votes: <int>
   }
 }
 */
