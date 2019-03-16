@@ -1,61 +1,11 @@
 import React, { Component } from 'react';
 import IdeaItem from './IdeaItem';
 import { withStyles } from '@material-ui/core/styles';
-import { createReadStream } from 'fs';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import CreateIdeaModal from './CreateIdeaModal';
-
-const initialState = {
-  currentBoard: {
-   id: 1,
-   owner: "Carter",
-   title: "We need more ideas for how to run the country",
-   ideas: [
-     {
-       id: 1,
-       owner: "Carter",
-       board: 1,
-       votes: 5,
-       text: "We need more naps throughout the day",
-       explanation: "This is my great explanation of my idea",
-       comments: [ 
-         {
-           owner: "Carter",
-           text: "This my great new idea!"
-         },
-         {
-           owner: "Connor",
-           text: "wow, this idea is so great! Carter for pres 2024"
-         }
-       ]
-
-     },
-     {
-      id: 2,
-      owner: "Connor",
-      board: 2,
-      votes: 2,
-      text: "We need to actually be productive and fill out our spreadsheets on time. I swear if we don't do this I'm going to flip my hat!",
-      explanation: "This is my great explanation of my idea",
-      comments: [ 
-        {
-          owner: "Connor",
-          text: "This my idea. I'm right, too"
-        },
-        {
-          owner: "Carter",
-          text: "wow, this idea is so great, also!"
-        }
-      ]
-
-    },
-   ]
- }
-}
+import { getCurrentBoard } from '../reducers';
+import { viewBoard } from '../actions'
 
 const styles = theme => ({
   ideaColumn: {
@@ -95,16 +45,27 @@ class BoardPage extends Component {
 
   }
 
+  componentDidMount() {
+    if (!this.props.currentBoard.id) {
+      this.props.viewBoard(this.props.match.params.id);
+    }
+  }
+
   renderIdeaList() {
     //TODO: get the initial state from the store
-    var ideas = initialState.currentBoard.ideas;
+    var ideas = this.props.currentBoard.ideas;
+    if (!ideas || ideas.length == 0) {
+      return "NO IDEAS IN LIST YET";
+    }
     var ideaItems = ideas.map(function(idea) {
               return <IdeaItem 
                       key={idea.id}
-                      title={idea.text} 
-                      votes={idea.votes} 
-                      explanation={idea.explanation}
-                      chatList={idea.comments}
+                      id={idea.id}
+                      title={idea.title} 
+                      total_votes={idea.total_votes} 
+                      description={idea.description}
+                      comments={idea.comments}
+                      has_voted={idea.has_voted}
                       >
                       </IdeaItem>
               });
@@ -121,10 +82,10 @@ class BoardPage extends Component {
         <CreateIdeaModal className={classes.addButton}></CreateIdeaModal>
         <div className={classes.subTitle}>
           <Typography color="textSecondary" className={classes.inlineLeft}>
-            Total Ideas: {this.props.numIdeas}
+            Total Ideas: {this.props.currentBoard.ideas ? this.props.currentBoard.ideas.length : ""}
           </Typography>
           <Typography color="textSecondary" className={classes.inlineRight}>
-            Votes you have left: {this.props.remainingVotes}
+            Votes you have left: {this.props.currentBoard.votes_remaining ? this.props.currentBoard.votes_remaining : ""}
           </Typography>
         </div>
         <div className={classes.ideaList}>
@@ -135,11 +96,19 @@ class BoardPage extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    currentBoard: state.currentBoard,
+    currentBoard: getCurrentBoard(state),
   }
 }
 
-export default withStyles(styles)(connect(mapStateToProps, null)(BoardPage));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    viewBoard: (boardID) => {
+      dispatch(viewBoard(boardID));
+    }
+  }
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(BoardPage));
 

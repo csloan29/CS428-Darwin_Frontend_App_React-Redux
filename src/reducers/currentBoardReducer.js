@@ -14,6 +14,15 @@ export default function(state = {}, action){
         return action.payload.data;
       }
       return state;
+    case ActionTypes.CREATE_IDEA:
+      if (action.payload.status === 201) {
+        console.log("successfully created new idea for board with data: ", action.payload);
+        var newState = {
+          ...state
+        };
+        newState.ideas = state.ideas.concat([action.payload.data]);
+        return newState;
+      }
     default:
       return state;
   }

@@ -39,3 +39,7 @@ export function getUserID(state) {
 export function getCurrentBoardID(state) {
   return state.currentBoard.id;
 }
+
+export function getCurrentBoard(state) {
+  return state.currentBoard;
+}

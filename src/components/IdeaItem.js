@@ -65,21 +65,21 @@ class IdeaItem extends Component {
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <div>
-            <LikeButton className={classes.likeButton}></LikeButton>
+            <LikeButton ideaID={this.props.id} liked={this.props.has_voted} className={classes.likeButton}></LikeButton>
           </div>
           <div className={classes.ideaText}>
             <Typography className={classes.heading}>{this.props.title}</Typography>
-            <Typography className={classes.secondaryHeading}>Total Votes: {this.props.votes}</Typography>
+            <Typography className={classes.secondaryHeading}>Total Votes: {this.props.total_votes}</Typography>
           </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
           <div className={classes.explanation}>
             <Typography variant="caption">
-              {this.props.explanation}
+              {this.props.description}
             </Typography>
           </div>
           <Divider />
-          <ChatList className={classes.chatList} chatList={this.props.chatList}/>
+          <ChatList className={classes.chatList} chatList={this.props.comments}/>
         </ExpansionPanelDetails>
         <ExpansionPanelActions>
           <Button size="small" color="primary" onClick={this.onSeeMore}>

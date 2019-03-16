@@ -5,7 +5,8 @@ import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { createBoard } from '../actions';
+import { createIdea } from '../actions';
+import { getCurrentBoardID } from '../reducers';
 
 function getModalStyle() {
   const top = 50;
@@ -41,8 +42,9 @@ class CreateIdeaModal extends Component {
 
     this.state = {
       title: "",
+      description: "",
       first: true,
-      modal: false
+      modal: false,
     }
     this.createIdea = this.createIdea.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
@@ -52,23 +54,20 @@ class CreateIdeaModal extends Component {
     this.setState({
       first: false
     })
-    if(this.state.title) {
-      //do something
-      this.props.createIdea(this.state.title);
+    if(this.state.title && this.state.description) {
+      console.log("creating idea in modal");
+      this.props.createIdea(this.state.title, this.state.description, this.props.boardID);
+      this.toggleModal();
     }
   }
 
   toggleModal() {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      first: true,
+      title: "",
+      description: "",
     })
-    if(!this.state.modal) {
-      //if closed, reset the values
-      this.setState({
-        first: true,
-        title: ""
-      })
-    }
   }
 
   isError(name) {
@@ -120,9 +119,10 @@ class CreateIdeaModal extends Component {
               className={classes.textField}
               margin="normal"
               variant="outlined"
+              onChange={this.handleChange("description")}
             />
             <div>
-              <Button variant="text" color="primary" className={classes.button} onClick={this.createBoard}>
+              <Button variant="text" color="primary" className={classes.button} onClick={this.createIdea}>
                 Add
               </Button>
               <Button variant="text" className={classes.button} onClick={this.toggleModal}>
@@ -136,12 +136,18 @@ class CreateIdeaModal extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    boardID: getCurrentBoardID(state),
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    createBoard: (title) => {
-      dispatch(createBoard(title));
+    createIdea: (title, description, boardID) => {
+      dispatch(createIdea(title, description, boardID));
     }
   }
 }
 
-export default withStyles(styles)(connect(null, mapDispatchToProps)(CreateIdeaModal));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(CreateIdeaModal));
