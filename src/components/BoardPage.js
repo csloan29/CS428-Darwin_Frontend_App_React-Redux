@@ -44,11 +44,6 @@ const styles = theme => ({
 //this is outlined in the second example of material ui react page for expansion panels
 class BoardPage extends Component {
 
-  constructor(props) {
-    super(props);
-
-  }
-
   componentDidMount() {
     if (!this.props.currentBoard.id) {
       this.props.viewBoard(this.props.match.params.id);
@@ -58,7 +53,7 @@ class BoardPage extends Component {
   renderIdeaList(classes) {
     //TODO: get the initial state from the store
     var ideas = this.props.currentBoard.ideas;
-    if (!ideas || ideas.length == 0) {
+    if (!ideas || ideas.length === 0) {
       return (
         <Typography variant="h5" color="textSecondary" className={classes.noIdeasWarning}>
           No ideas added yet...

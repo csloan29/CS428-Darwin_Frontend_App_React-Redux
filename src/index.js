@@ -12,7 +12,7 @@ import reducers from './reducers';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 
-import { isLoggedIn, getUser, getBoard } from './auth';
+import { isLoggedIn, getUser} from './auth';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

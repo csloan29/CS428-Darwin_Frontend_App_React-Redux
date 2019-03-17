@@ -29,7 +29,7 @@ export default function(state = {}, action){
     case ActionTypes.VOTE:
       if (action.payload.status === 200 || action.payload.status === 201) {
         console.log("Data returned from voting: ", action.payload, " on id: ", action.meta.id);
-        var newState = {
+        newState = {
           ...state
         }
         for (let ideaIndex in newState.ideas) {

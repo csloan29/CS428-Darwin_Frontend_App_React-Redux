@@ -29,7 +29,6 @@ export default function(state = {}, action){
       return {
         isLoggedIn: false,
       }
-      return state;
     default:
       return state;
   }
