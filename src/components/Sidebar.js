@@ -9,12 +9,21 @@ import ListItemText from '@material-ui/core/ListItemText';
 import SearchIcon from '@material-ui/icons/Search';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import AddIcon from '@material-ui/icons/Add';
+import Divider from '@material-ui/core/Divider';
 import { signOut } from '../actions';
 import { connect } from 'react-redux';
+import { getCurrentBoardID } from '../reducers'
 
 const styles = {
   list: {
     width: 250,
+  },
+  joinCodeText: {
+    display: "block",
+  },
+  joinCode: {
+    textAlign: "center",
   },
   fullList: {
     width: 'auto',
@@ -32,12 +41,31 @@ class Sidebar extends Component {
     this.props.signOut();
   }
 
+  shouldShowBoardID(classes) {
+    if (this.props.currentBoardID) {
+      return (
+        <div>
+          <ListItem button key={"Add"}>
+            <ListItemIcon><AddIcon></AddIcon></ListItemIcon>
+            <ListItemText className={classes.joinCodeText} primary={"Board Code: "} />
+            <ListItemText className={classes.joinCode} secondary={this.props.currentBoardID} />
+          </ListItem>
+          <Divider></Divider>
+        </div>
+      );
+    }
+    else {
+      return
+    }
+  }
+
   render() {
     const { classes } = this.props;
 
     const sideList = (
       <div className={classes.list}>
         <List>
+          {this.shouldShowBoardID(classes)}
           <Link to='/boards' style={{textDecoration: 'none'}}>
             <ListItem button key={"Find Board"}>
               <ListItemIcon><SearchIcon /></ListItemIcon>
@@ -77,6 +105,12 @@ class Sidebar extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    currentBoardID: getCurrentBoardID(state)
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     signOut: () => {
@@ -85,4 +119,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withStyles(styles)(connect(null, mapDispatchToProps)(Sidebar));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Sidebar));
