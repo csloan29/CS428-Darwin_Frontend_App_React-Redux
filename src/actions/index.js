@@ -63,6 +63,13 @@ export function viewBoard(boardID) {
   }
 }
 
+export function clearCurrentBoard() {
+  console.log("Clearing current Board from store");
+  return {
+    type: ActionTypes.CLEAR_CURRENT_BOARD,
+  }
+}
+
 export function createIdea(title, description, boardID) {
   console.log("Creating idea with title: ", title, " and explanation: ", description, " for id: ", boardID);
   const promise = axios.post(`${baseURL}/ideas/`, {
@@ -112,6 +119,7 @@ let ActionTypes = {
   SIGN_OUT: 'SIGN_OUT',
   CREATE_BOARD: 'CREATE_BOARD',
   VIEW_BOARD: 'VIEW_BOARD',
+  CLEAR_CURRENT_BOARD: 'CLEAR_CURRENT_BOARD',
   CREATE_IDEA: 'CREATE_IDEA',
   VIEW_IDEA: 'VIEW_IDEA',
   VOTE: 'VOTE'

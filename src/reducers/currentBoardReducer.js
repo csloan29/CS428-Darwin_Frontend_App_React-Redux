@@ -14,6 +14,8 @@ export default function(state = {}, action){
         return action.payload.data;
       }
       return state;
+    case ActionTypes.CLEAR_CURRENT_BOARD:
+      return {};
     case ActionTypes.CREATE_IDEA:
       if (action.payload.status === 201) {
         console.log("successfully created new idea for board with data: ", action.payload);
@@ -23,6 +25,7 @@ export default function(state = {}, action){
         newState.ideas = state.ideas.concat([action.payload.data]);
         return newState;
       }
+      return state;
     case ActionTypes.VOTE:
       if (action.payload.status === 200 || action.payload.status === 201) {
         console.log("Data returned from voting: ", action.payload, " on id: ", action.meta.id);

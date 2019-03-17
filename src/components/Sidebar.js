@@ -11,16 +11,13 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import AddIcon from '@material-ui/icons/Add';
 import Divider from '@material-ui/core/Divider';
-import { signOut } from '../actions';
 import { connect } from 'react-redux';
+import { signOut, clearCurrentBoard } from '../actions';
 import { getCurrentBoardID } from '../reducers'
 
 const styles = {
   list: {
     width: 250,
-  },
-  joinCodeText: {
-    display: "block",
   },
   joinCode: {
     textAlign: "center",
@@ -37,6 +34,10 @@ class Sidebar extends Component {
     this.logOut = this.logOut.bind(this);
   }
 
+  escapeBoard() {
+    this.props.clearCurrentBoard();
+  }
+
   logOut() {
     this.props.signOut();
   }
@@ -47,7 +48,7 @@ class Sidebar extends Component {
         <div>
           <ListItem button key={"Add"}>
             <ListItemIcon><AddIcon></AddIcon></ListItemIcon>
-            <ListItemText className={classes.joinCodeText} primary={"Board Code: "} />
+            <ListItemText primary={"Board Code: "} />
             <ListItemText className={classes.joinCode} secondary={this.props.currentBoardID} />
           </ListItem>
           <Divider></Divider>
@@ -66,7 +67,7 @@ class Sidebar extends Component {
       <div className={classes.list}>
         <List>
           {this.shouldShowBoardID(classes)}
-          <Link to='/boards' style={{textDecoration: 'none'}}>
+          <Link to='/boards' style={{textDecoration: 'none'}} onClick={this.escapeBoard}>
             <ListItem button key={"Find Board"}>
               <ListItemIcon><SearchIcon /></ListItemIcon>
               <ListItemText primary={"Find Board"} />
@@ -115,6 +116,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     signOut: () => {
       dispatch(signOut());
+    },
+    clearCurrentBoard: () => {
+      dispatch(clearCurrentBoard());
     }
   }
 }
