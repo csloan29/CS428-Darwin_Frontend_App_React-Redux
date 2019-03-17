@@ -53,7 +53,8 @@ class IdeaItem extends Component {
 
   onSeeMore() {
     //TODO: finish this link
-    this.props.history.push(`/boards/${this.props.match.params.id}/`);
+    console.log("this is this: ", this);
+    this.props.history.push(`/boards/${this.props.match.params.id}/${this.props.id}`);
   }
 
   render() {

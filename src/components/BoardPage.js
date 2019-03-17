@@ -69,9 +69,12 @@ class BoardPage extends Component {
                       description={idea.description}
                       comments={idea.comments}
                       has_voted={idea.has_voted}
+                      history={this.props.history}
+                      match={this.props.match}
                       >
                       </IdeaItem>
-              });
+              },
+              this);
     return ideaItems;
   }
 
