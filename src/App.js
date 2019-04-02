@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import { connect } from 'react-redux';
 import { getIsLoggedIn } from './reducers';
 import './App.css';
+import Poller from './poller.js';
 
 const theme = createMuiTheme({
   palette: {
@@ -23,14 +24,24 @@ const theme = createMuiTheme({
   }
 });
 
+const wrapInPoller = (Component) => {
+  return (props) => {
+    return (
+      <Poller>
+        <Component {...props}/>
+      </Poller>
+    )
+  }
+}
+
 const Authenticated = (props) => {
   return (
     <div>
       <Header />
       <Switch>
         <Route exact path="/boards" component={FindBoardPage}/>
-        <Route exact path="/boards/:id" component={BoardPage}/>
-        <Route exact path="/boards/:id/:ideaID" component={IdeaPage}/>
+        <Route exact path="/boards/:id" component={wrapInPoller(BoardPage)}/>
+        <Route exact path="/boards/:id/:ideaID" component={wrapInPoller(IdeaPage)}/>
         <Redirect from="/" to="/boards"/>
       </Switch>
     </div>
