@@ -59,3 +59,17 @@ export function getCurrentBoardID(state) {
 export function getCurrentBoard(state) {
   return state.currentBoard;
 }
+
+export function getComments(state, ideaID) {
+  let toCompare = Number(ideaID); //ideaID is passed in as a string because of match.params
+  if(!state.currentBoard.id) {
+    return [];
+  }
+  for(let i = 0; i < state.currentBoard.ideas.length; i++) {
+    let current = state.currentBoard.ideas[i];
+    if(current.id === toCompare) {
+      return current.comments;
+    }
+  }
+  return [];
+}

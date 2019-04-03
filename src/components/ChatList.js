@@ -22,42 +22,27 @@ class ChatList extends Component {
   renderIdeas() {
     const { classes } = this.props;
     let ideas = [];
-    ideas.push(
-      <ListItem key='1' alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Brunch this weekend?"
-          secondary={
-            <React.Fragment>
-              <Typography component="span" className={classes.inline} color="textPrimary">
-                Ali Connors
-              </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-    )
-    ideas.push(
-      <ListItem key='2' alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Brunch this weekend?"
-          secondary={
-            <React.Fragment>
-              <Typography component="span" className={classes.inline} color="textPrimary">
-                Ali Connors
-              </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
-            </React.Fragment>
-          }
-        />
-      </ListItem>
-    )
+    if(!this.props.chatList) {
+      return [];
+    }
+    for(let i = 0; i < this.props.chatList.length; i++) {
+      let current = this.props.chatList[i];
+      ideas.push(
+        <ListItem key={"comment" + i} alignItems="flex-start">
+          {/*
+            <ListItemAvatar>
+              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            </ListItemAvatar>
+          */}
+          <ListItemText
+            primary={current.message}
+            secondary={
+              current.user.first_name + " " + current.user.last_name
+            }
+          />
+        </ListItem>
+      )
+    }
     return ideas;
   }
 

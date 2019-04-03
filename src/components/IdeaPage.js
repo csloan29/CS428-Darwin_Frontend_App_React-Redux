@@ -9,6 +9,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Send from '@material-ui/icons/Send';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
+import { getComments } from '../reducers';
 
 const styles = theme => ({
   root: {
@@ -66,7 +68,7 @@ class IdeaPage extends Component {
           <LikeButton className={classes.likeButton}/>
         </div>
         <Divider/>
-        <ChatList />
+        <ChatList chatList={this.props.comments}/>
         <TextField
           id="newComment"
           label="Add Your Own Comment"
@@ -91,4 +93,10 @@ class IdeaPage extends Component {
   }
 }
 
-export default withStyles(styles)(IdeaPage);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    comments: getComments(state, ownProps.match.params.ideaID)
+  }
+}
+
+export default withStyles(styles)(connect(mapStateToProps)(IdeaPage));
