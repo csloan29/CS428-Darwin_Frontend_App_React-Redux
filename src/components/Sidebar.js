@@ -32,6 +32,7 @@ class Sidebar extends Component {
     super(props);
 
     this.logOut = this.logOut.bind(this);
+    this.escapeBoard = this.escapeBoard.bind(this);
   }
 
   escapeBoard() {

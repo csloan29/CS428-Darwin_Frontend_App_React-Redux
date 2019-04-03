@@ -4,11 +4,19 @@ import { viewBoard } from './actions';
 
 class Poller extends Component {
   componentDidMount() {
-    console.log("mounting");
+    let timer = window.setInterval(() => {
+      if(this.props.match.params.id) {
+        this.props.viewBoard(this.props.match.params.id);
+      }
+    }, 3000);
+    this.setState({
+      timer
+    })
   }
 
   componentWillUnmount() {
-    console.log("unmounting");
+    console.log("Clearing interval");
+    window.clearInterval(this.state.timer)
   }
 
   render() {

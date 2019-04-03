@@ -27,7 +27,7 @@ const theme = createMuiTheme({
 const wrapInPoller = (Component) => {
   return (props) => {
     return (
-      <Poller>
+      <Poller {...props}>
         <Component {...props}/>
       </Poller>
     )
