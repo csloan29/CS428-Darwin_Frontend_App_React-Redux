@@ -10,7 +10,7 @@ import Send from '@material-ui/icons/Send';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { getComments, getHasVoted } from '../reducers';
+import { getComments, getIdea } from '../reducers';
 import { createComment } from '../actions';
 
 const styles = theme => ({
@@ -95,13 +95,13 @@ class IdeaPage extends Component {
     return (
       <div className={classes.root}>
         <Typography variant="h3" gutterBottom>
-          Title of Idea
+          {this.props.theIdea.title}
         </Typography>
         <div className={classes.descrContainer}>
           <Typography color="textSecondary" component="span" className={classes.descr} gutterBottom>
-            Idea description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
+            {this.props.theIdea.description}
           </Typography>
-          <LikeButton ideaID={this.props.ideaID} liked={this.props.has_voted} lassName={classes.likeButton}/>
+          <LikeButton ideaID={this.props.ideaID} liked={this.props.theIdea.has_voted} lassName={classes.likeButton}/>
         </div>
         <Divider/>
         <ChatList chatList={this.props.comments}/>
@@ -135,9 +135,9 @@ class IdeaPage extends Component {
 const mapStateToProps = (state, ownProps) => {
   let ideaID = Number(ownProps.match.params.ideaID)
   return {
-    comments: getComments(state, ownProps.match.params.ideaID),
+    comments: getComments(state, ideaID),
     ideaID,
-    has_voted: getHasVoted(state, ideaID)
+    theIdea: getIdea(state, ideaID)
   }
 }
 
