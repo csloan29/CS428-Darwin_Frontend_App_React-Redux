@@ -105,11 +105,20 @@ export function vote(ideaID) {
   }
 }
 
-export function createComment(text) {
-  console.log("Createing idea with text: ", text);
+export function createComment(text, ideaID) {
+  console.log("Createing comment with text: ", text);
+  console.log("Createing comment on ID: ", ideaID);
+  const promise = axios.post(`${baseURL}/comments/`, {
+    message: text,
+    idea: Number(ideaID)
+  }, {
+    headers: {
+      Authorization: `Token ${getToken()}`
+    }
+  });
   return {
     type: ActionTypes.CREATE_COMMENT,
-    payload: {}
+    payload: promise
   }
 }
 
@@ -122,7 +131,8 @@ let ActionTypes = {
   CLEAR_CURRENT_BOARD: 'CLEAR_CURRENT_BOARD',
   CREATE_IDEA: 'CREATE_IDEA',
   VIEW_IDEA: 'VIEW_IDEA',
-  VOTE: 'VOTE'
+  VOTE: 'VOTE',
+  CREATE_COMMENT: 'CREATE_COMMENT'
   //CREATE IDEA
   //VIEW IDEA
   //CREATE COMMENT
