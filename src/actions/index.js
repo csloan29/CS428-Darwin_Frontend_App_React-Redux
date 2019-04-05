@@ -51,7 +51,7 @@ export function createBoard(title) {
 }
 
 export function viewBoard(boardID) {
-  console.log("Retrieving board with ID:", boardID);
+  //console.log("Retrieving board with ID:", boardID);
   const promise = axios.get(`${baseURL}/boards/${boardID}/`, {
     headers: {
       Authorization: `Token ${getToken()}`
