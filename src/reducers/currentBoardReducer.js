@@ -40,6 +40,18 @@ export default function(state = {}, action){
         return newState;
       }
       return state;
+    case ActionTypes.START_VOTING:
+      if (action.payload.status === 201) {
+        console.log("Data returned from starting new round of voting: ", action.payload);
+        //TODO: handle doing new round of voting here
+      }
+      return state;
+    case ActionTypes.END_VOTING:
+      if (action.payload.status === 201) {
+        console.log("Data returned from ending round of voting: ", action.payload);
+        //TODO: handle doing new round of voting here
+      }
+      return state;
     default:
       return state;
   }

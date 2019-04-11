@@ -43,31 +43,12 @@ class Sidebar extends Component {
     this.props.signOut();
   }
 
-  shouldShowBoardID(classes) {
-    if (this.props.currentBoardID) {
-      return (
-        <div>
-          <ListItem button key={"Add"}>
-            <ListItemIcon><AddIcon></AddIcon></ListItemIcon>
-            <ListItemText primary={"Board Code: "} />
-            <ListItemText className={classes.joinCode} secondary={this.props.currentBoardID} />
-          </ListItem>
-          <Divider></Divider>
-        </div>
-      );
-    }
-    else {
-      return
-    }
-  }
-
   render() {
     const { classes } = this.props;
 
     const sideList = (
       <div className={classes.list}>
         <List>
-          {this.shouldShowBoardID(classes)}
           <Link to='/boards' style={{textDecoration: 'none'}} onClick={this.escapeBoard}>
             <ListItem button key={"Find Board"}>
               <ListItemIcon><SearchIcon /></ListItemIcon>

@@ -106,10 +106,42 @@ export function vote(ideaID) {
 }
 
 export function createComment(text) {
-  console.log("Createing idea with text: ", text);
+  console.log("Creating idea with text: ", text);
   return {
     type: ActionTypes.CREATE_COMMENT,
     payload: {}
+  }
+}
+
+export function startVoting(boardID, votesPerUser) {
+  console.log("Beginning round of voting on ideas with board id: ", boardID, " with vote limit: ", votesPerUser);
+  const promise = axios.post(`${baseURL}/start_round/${boardID}/`, 
+  {
+    round_votes: votesPerUser, 
+  }, 
+  {
+    headers: {
+      Authorization: `Token ${getToken()}`
+    }
+  });
+  return {
+    type: ActionTypes.START_VOTING,
+    payload: promise,
+  }
+}
+
+export function endVoting(boardID, cutoffVotes) {
+  console.log("Ending round of voting on ideas with board id: ", boardID, " with cutoff: ", cutoffVotes);
+  const promise = axios.post(`${baseURL}/end_round/${boardID}/`, {
+    cutoff: cutoffVotes, 
+  }, {
+    headers: {
+      Authorization: `Token ${getToken()}`
+    }
+  });
+  return {
+    type: ActionTypes.END_VOTING,
+    payload: promise,
   }
 }
 
@@ -122,9 +154,9 @@ let ActionTypes = {
   CLEAR_CURRENT_BOARD: 'CLEAR_CURRENT_BOARD',
   CREATE_IDEA: 'CREATE_IDEA',
   VIEW_IDEA: 'VIEW_IDEA',
-  VOTE: 'VOTE'
-  //CREATE IDEA
-  //VIEW IDEA
+  VOTE: 'VOTE',
+  START_VOTING: 'START_VOTING',
+  END_VOTING: 'END_VOTING',
   //CREATE COMMENT
 }
 

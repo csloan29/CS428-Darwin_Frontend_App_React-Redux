@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { getIsLoggedIn } from './reducers';
 import './App.css';
 import Poller from './poller.js';
+import ControlPanel from './components/ControlPanel';
 
 const theme = createMuiTheme({
   palette: {
@@ -38,6 +39,7 @@ const Authenticated = (props) => {
   return (
     <div>
       <Header />
+      <ControlPanel></ControlPanel>
       <Switch>
         <Route exact path="/boards" component={FindBoardPage}/>
         <Route exact path="/boards/:id" component={wrapInPoller(BoardPage)}/>

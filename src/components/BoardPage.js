@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import CreateIdeaModal from './CreateIdeaModal';
 import { getCurrentBoard } from '../reducers';
-import { viewBoard } from '../actions'
+import { viewBoard } from '../actions';
 
 const styles = theme => ({
   ideaColumn: {
@@ -50,6 +50,21 @@ class BoardPage extends Component {
     }
   }
 
+  shouldShowVoteCount(classes) {
+    if (this.props.currentBoard.is_voting) {
+      return (
+        <div>
+          <Typography color="textSecondary" className={classes.inlineLeft}>
+            Total Ideas: {this.props.currentBoard.ideas ? this.props.currentBoard.ideas.length : ""}
+          </Typography>
+          <Typography color="textSecondary" className={classes.inlineRight}>
+            Votes you have left: {this.props.currentBoard.votes_remaining ? this.props.currentBoard.votes_remaining : ""}
+          </Typography>
+        </div>
+      )
+    }
+  }
+
   renderIdeaList(classes) {
     //TODO: get the initial state from the store
     var ideas = this.props.currentBoard.ideas;
@@ -87,12 +102,7 @@ class BoardPage extends Component {
         </Typography>
         <CreateIdeaModal className={classes.addButton}></CreateIdeaModal>
         <div className={classes.subTitle}>
-          <Typography color="textSecondary" className={classes.inlineLeft}>
-            Total Ideas: {this.props.currentBoard.ideas ? this.props.currentBoard.ideas.length : ""}
-          </Typography>
-          <Typography color="textSecondary" className={classes.inlineRight}>
-            Votes you have left: {this.props.currentBoard.votes_remaining ? this.props.currentBoard.votes_remaining : ""}
-          </Typography>
+          {this.shouldShowVoteCount(classes)}
         </div>
         <div className={classes.ideaList}>
             {this.renderIdeaList(classes)}
