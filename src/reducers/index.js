@@ -73,3 +73,17 @@ export function getComments(state, ideaID) {
   }
   return [];
 }
+
+export function getIdea(state, ideaID) {
+  if(!state.currentBoard.id) {
+    return {};
+  }
+  for(let i = 0; i < state.currentBoard.ideas.length; i++) {
+    let current = state.currentBoard.ideas[i];
+    if(current.id === ideaID) {
+      return current;
+    }
+  }
+  console.error("THIS SHOULDN'T HAPPEN!");
+  return false;
+}

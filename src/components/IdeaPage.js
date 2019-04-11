@@ -10,7 +10,8 @@ import Send from '@material-ui/icons/Send';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { getComments } from '../reducers';
+import { getComments, getIdea } from '../reducers';
+import { createComment } from '../actions';
 
 const styles = theme => ({
   root: {
@@ -42,16 +43,51 @@ const styles = theme => ({
 class IdeaPage extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      text: "",
+      first: true
+    }
     this.newComment = this.newComment.bind(this);
     this.onBack = this.onBack.bind(this);
   }
 
   newComment() {
-    console.log("New Comment!!");
+    if(!this.state.text) {
+      this.setState({
+        first: false
+      })
+      return;
+    }
+
+    this.props.createComment(this.state.text, this.props.ideaID);
+    console.log("gotHere?");
+    this.setState({
+      text: "",
+      first: true
+    });
   }
 
   onBack() {
     this.props.history.push(`/boards/${this.props.match.params.id}`);
+  }
+
+  handleChange(name) {
+    return (e) => {
+      this.setState({
+        [name]: e.target.value
+      });
+    };
+  }
+
+  isError(name) {
+    if(this.state.first) {
+      return false;
+    }
+    if(this.state[name]) {
+      return false;
+    }
+    return true;
   }
 
   render() {
@@ -59,13 +95,13 @@ class IdeaPage extends Component {
     return (
       <div className={classes.root}>
         <Typography variant="h3" gutterBottom>
-          Title of Idea
+          {this.props.theIdea.title}
         </Typography>
         <div className={classes.descrContainer}>
           <Typography color="textSecondary" component="span" className={classes.descr} gutterBottom>
-            Idea description. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
+            {this.props.theIdea.description}
           </Typography>
-          <LikeButton className={classes.likeButton}/>
+          <LikeButton ideaID={this.props.ideaID} liked={this.props.theIdea.has_voted} lassName={classes.likeButton}/>
         </div>
         <Divider/>
         <ChatList chatList={this.props.comments}/>
@@ -74,8 +110,11 @@ class IdeaPage extends Component {
           label="Add Your Own Comment"
           placeholder="This idea is grrrreat!"
           multiline
+          error={this.isError("text")}
           className={classes.textField}
           margin="normal"
+          onChange={this.handleChange("text")}
+          value={this.state.text}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -94,9 +133,20 @@ class IdeaPage extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  let ideaID = Number(ownProps.match.params.ideaID)
   return {
-    comments: getComments(state, ownProps.match.params.ideaID)
+    comments: getComments(state, ideaID),
+    ideaID,
+    theIdea: getIdea(state, ideaID)
   }
 }
 
-export default withStyles(styles)(connect(mapStateToProps)(IdeaPage));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createComment: (text, ideaID) => {
+      dispatch(createComment(text, ideaID));
+    }
+  }
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(IdeaPage));

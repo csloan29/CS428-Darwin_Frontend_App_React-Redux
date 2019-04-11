@@ -8,7 +8,7 @@ class Poller extends Component {
       if(this.props.match.params.id) {
         this.props.viewBoard(this.props.match.params.id);
       }
-    }, 3000);
+    }, 1000);
     this.setState({
       timer
     })

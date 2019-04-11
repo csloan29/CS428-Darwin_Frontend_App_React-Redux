@@ -57,6 +57,14 @@ class IdeaItem extends Component {
     this.props.history.push(`/boards/${this.props.match.params.id}/${this.props.id}`);
   }
 
+  filterComments() {
+    let comments = this.props.comments;
+    if(comments.length > 3) {
+      return comments.slice(comments.length - 3);
+    }
+    return comments;
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -79,7 +87,7 @@ class IdeaItem extends Component {
             </Typography>
           </div>
           <Divider />
-          <ChatList className={classes.chatList} chatList={this.props.comments}/>
+          <ChatList className={classes.chatList} chatList={this.filterComments()}/>
         </ExpansionPanelDetails>
         <ExpansionPanelActions>
           <Button size="small" color="primary" onClick={this.onSeeMore}>

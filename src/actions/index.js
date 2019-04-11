@@ -51,7 +51,7 @@ export function createBoard(title) {
 }
 
 export function viewBoard(boardID) {
-  console.log("Retrieving board with ID:", boardID);
+  //console.log("Retrieving board with ID:", boardID);
   const promise = axios.get(`${baseURL}/boards/${boardID}/`, {
     headers: {
       Authorization: `Token ${getToken()}`
@@ -105,11 +105,20 @@ export function vote(ideaID) {
   }
 }
 
-export function createComment(text) {
-  console.log("Creating idea with text: ", text);
+export function createComment(text, ideaID) {
+  console.log("Createing comment with text: ", text);
+  console.log("Createing comment on ID: ", ideaID);
+  const promise = axios.post(`${baseURL}/comments/`, {
+    message: text,
+    idea: Number(ideaID)
+  }, {
+    headers: {
+      Authorization: `Token ${getToken()}`
+    }
+  });
   return {
     type: ActionTypes.CREATE_COMMENT,
-    payload: {}
+    payload: promise
   }
 }
 
@@ -157,6 +166,9 @@ let ActionTypes = {
   VOTE: 'VOTE',
   START_VOTING: 'START_VOTING',
   END_VOTING: 'END_VOTING',
+  CREATE_COMMENT: 'CREATE_COMMENT'
+  //CREATE IDEA
+  //VIEW IDEA
   //CREATE COMMENT
 }
 
