@@ -10,7 +10,7 @@ import Send from '@material-ui/icons/Send';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { getComments, getIdea } from '../reducers';
+import { getComments, getIdea, getCurrentBoard } from '../reducers';
 import { createComment } from '../actions';
 
 const styles = theme => ({
@@ -90,6 +90,15 @@ class IdeaPage extends Component {
     return true;
   }
 
+  renderIcon(classes) {
+    if (this.props.currentBoard.is_voting) {
+      return (
+        <LikeButton ideaID={this.props.ideaID} liked={this.props.theIdea.has_voted} lassName={classes.likeButton}/>
+      )
+    }
+    return null;
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -101,7 +110,7 @@ class IdeaPage extends Component {
           <Typography color="textSecondary" component="span" className={classes.descr} gutterBottom>
             {this.props.theIdea.description}
           </Typography>
-          <LikeButton ideaID={this.props.ideaID} liked={this.props.theIdea.has_voted} lassName={classes.likeButton}/>
+          {this.renderIcon(classes)}
         </div>
         <Divider/>
         <ChatList chatList={this.props.comments}/>
@@ -137,7 +146,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     comments: getComments(state, ideaID),
     ideaID,
-    theIdea: getIdea(state, ideaID)
+    theIdea: getIdea(state, ideaID),
+    currentBoard: getCurrentBoard(state),
   }
 }
 
