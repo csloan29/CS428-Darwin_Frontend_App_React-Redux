@@ -61,7 +61,6 @@ class ControlPanel extends Component {
     super(props);
 
     this.state = {
-      is_voting: this.props.currentBoard.is_voting,
       first: true,
     }
     this.startVoting = this.startVoting.bind(this);
@@ -93,22 +92,27 @@ class ControlPanel extends Component {
       });
       return;
     }
-    this.props.startVoting(this.props.currentBoard.id, this.props.votesPerUser);
+    this.props.startVoting(this.props.currentBoard.id, this.state.votesPerUser);
   }
 
   endVoting() {
-    console.log("got into end voting");
     if (!this.state.cutoffVotes) {
       this.setState({
         first: false,
       });
-      return;    }
-    this.props.endVoting(this.props.currentBoard.id, this.props.cutoffVotes);
+      return;    
+    }
+    this.props.endVoting(this.props.currentBoard.id, this.state.cutoffVotes);
   }
 
   render() {
     const { classes } = this.props;
-    //TODO: change these qualifications to be based on board state, not local state
+    // long check to make sure there is a current board for the control panel to render
+    if (!this.props.currentBoard || 
+      (Object.entries(this.props.currentBoard).length === 0 && 
+      this.props.currentBoard.constructor === Object)) {
+        return null;
+    }
     if (this.props.currentBoard.is_owner) {
       if (this.props.currentBoard.is_voting) {
         return (
@@ -119,27 +123,27 @@ class ControlPanel extends Component {
                   <SettingsIcon className={classes.settIcon}></SettingsIcon>
                   <Typography variant="h5" >Board Control Panel</Typography>
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                  <div>
-                    <Button 
+                <ExpansionPanelDetails className={classes.details}>
+                <div className={classes.voteBar}>
+                    <Button
                     variant="outlined" 
                     className={classes.button}
                     onClick={this.endVoting}
                     >
                       End Voting
-                    </Button>          
+                    </Button>         
                     <TextField
-                      id="votesCutoff"
-                      error={this.isError("votesCutoff")}
-                      label="Minimum Cutoff Votes"
+                      id="cutoffVotes"
+                      error={this.isError("cutoffVotes")}
+                      label="Cutoff Votes Amount"
                       className={classes.textField}
                       margin="normal"
-                      onChange={this.handleChange("votesCutoff")}
+                      onChange={this.handleChange("cutoffVotes")}
                     />
                   </div>
                   <Divider />
                   <Typography className={classes.boardJoinCode}>
-                    Board Join Code: {this.props.currentBoard.id}
+                    Board Join Code:    {this.props.currentBoard.id}
                   </Typography>
                 </ExpansionPanelDetails>
               </ExpansionPanel>

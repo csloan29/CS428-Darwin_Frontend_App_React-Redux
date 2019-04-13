@@ -9,8 +9,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import { connect } from 'react-redux';
+import { getCurrentBoard } from '../reducers';
 
 import LikeButton from './LikeButton';
+import RestoreButton from './RestoreButton';
 import ChatList from './ChatList';
 
 const styles = theme => {
@@ -21,7 +24,7 @@ const styles = theme => {
     ideaText: {
       display: 'block',
     },
-    likeButton: {
+    button: {
       margin: "0 10px 0 0",
     },
     heading: {
@@ -41,6 +44,10 @@ const styles = theme => {
     chatList: {
       margin: "15px 0 0 0",
     },
+    removedText: {
+      textDecoration: "line-through",
+
+    }
 }};
 
 class IdeaItem extends Component {
@@ -52,8 +59,6 @@ class IdeaItem extends Component {
   }
 
   onSeeMore() {
-    //TODO: finish this link
-    console.log("this is this: ", this);
     this.props.history.push(`/boards/${this.props.match.params.id}/${this.props.id}`);
   }
 
@@ -65,6 +70,56 @@ class IdeaItem extends Component {
     return comments;
   }
 
+  renderIcon(classes) {
+    if (this.props.currentBoard.is_voting) {
+      if (this.props.alive) {
+        return (
+          <LikeButton ideaID={this.props.id} liked={this.props.has_voted} className={classes.button}></LikeButton>
+        )
+      }
+      else {
+        if (this.props.currentBoard.is_owner) {
+          return (
+            <RestoreButton ideaID={this.props.id} className={classes.button}></RestoreButton>
+          )
+        }
+        return null;    
+      }
+    }
+    else {
+      if (this.props.alive) {
+        return null;
+      }
+      else {
+        if (this.props.currentBoard.is_owner) {
+          return (
+            <RestoreButton ideaID={this.props.id} className={classes.button}></RestoreButton>
+          )
+        }
+        return null;    
+      }
+    }
+  }
+
+  renderIdeaText(classes) {
+    if (this.props.alive) {
+      return (
+        <div className={classes.ideaText}>
+          <Typography className={classes.heading}>{this.props.title}</Typography>
+          <Typography className={classes.secondaryHeading}>Total Votes: {this.props.total_votes}</Typography>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className={classes.ideaText}>
+          <Typography className={classes.heading && classes.removedText}>{this.props.title}</Typography>
+          <Typography className={classes.secondaryHeading}>Idea was removed</Typography>
+        </div>
+      )
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -72,13 +127,9 @@ class IdeaItem extends Component {
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <div>
-            <LikeButton ideaID={this.props.id} liked={this.props.has_voted} className={classes.likeButton}></LikeButton>
-
+            {this.renderIcon(classes)}
           </div>
-          <div className={classes.ideaText}>
-            <Typography className={classes.heading}>{this.props.title}</Typography>
-            <Typography className={classes.secondaryHeading}>Total Votes: {this.props.total_votes}</Typography>
-          </div>
+          {this.renderIdeaText(classes)}
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
           <div className={classes.explanation}>
@@ -104,4 +155,10 @@ IdeaItem.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(IdeaItem);
+const mapStateToProps = (state) => {
+  return {
+    currentBoard: getCurrentBoard(state),
+  }
+}
+
+export default withStyles(styles)(connect(mapStateToProps, null)(IdeaItem));

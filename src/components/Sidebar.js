@@ -40,6 +40,7 @@ class Sidebar extends Component {
   }
 
   logOut() {
+    this.props.clearCurrentBoard();
     this.props.signOut();
   }
 

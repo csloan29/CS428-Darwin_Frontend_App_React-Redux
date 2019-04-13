@@ -105,9 +105,28 @@ export function vote(ideaID) {
   }
 }
 
+export function restoreIdea(ideaID) {
+  console.log("Restoring idea with id: ", ideaID);
+  const promise = axios.post(`${baseURL}/resurrect_idea/${ideaID}/`, 
+  {
+    idea: ideaID
+  }, {
+    headers: {
+      Authorization: `Token ${getToken()}`
+    }
+  });
+  return {
+    type: ActionTypes.RESTORE_IDEA,
+    payload: promise,
+    meta: {
+      id: ideaID,
+    }
+  }
+}
+
 export function createComment(text, ideaID) {
-  console.log("Createing comment with text: ", text);
-  console.log("Createing comment on ID: ", ideaID);
+  console.log("Creating comment with text: ", text);
+  console.log("Creating comment on ID: ", ideaID);
   const promise = axios.post(`${baseURL}/comments/`, {
     message: text,
     idea: Number(ideaID)
@@ -140,10 +159,13 @@ export function startVoting(boardID, votesPerUser) {
 }
 
 export function endVoting(boardID, cutoffVotes) {
-  console.log("Ending round of voting on ideas with board id: ", boardID, " with cutoff: ", cutoffVotes);
-  const promise = axios.post(`${baseURL}/end_round/${boardID}/`, {
-    cutoff: cutoffVotes, 
-  }, {
+  var cutoff = parseInt(cutoffVotes);
+  console.log("Ending round of voting on ideas with board id: ", boardID, " with cutoff: ", cutoff);
+  const promise = axios.post(`${baseURL}/end_round/${boardID}/`, 
+  {
+    cutoff: cutoff, 
+  }, 
+  {
     headers: {
       Authorization: `Token ${getToken()}`
     }
@@ -164,12 +186,10 @@ let ActionTypes = {
   CREATE_IDEA: 'CREATE_IDEA',
   VIEW_IDEA: 'VIEW_IDEA',
   VOTE: 'VOTE',
+  RESTORE_IDEA: 'RESTORE_IDEA',
   START_VOTING: 'START_VOTING',
   END_VOTING: 'END_VOTING',
   CREATE_COMMENT: 'CREATE_COMMENT'
-  //CREATE IDEA
-  //VIEW IDEA
-  //CREATE COMMENT
 }
 
 export default ActionTypes;
